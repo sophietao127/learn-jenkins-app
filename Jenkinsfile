@@ -2,24 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
-            }
-            steps {
-                sh '''
-                    ls -la
-                    node --version
-                    npm --version
-                    npm ci
-                    npm run build
-                    ls -la
-                '''
-            }
-        }
+        // stage('Build') {
+        //     agent {
+        //         docker {
+        //             image 'node:18-alpine'
+        //             reuseNode true
+        //         }
+        //     }
+        //     steps {
+        //         sh '''
+        //             ls -la
+        //             node --version
+        //             npm --version
+        //             npm ci
+        //             npm run build
+        //             ls -la
+        //         '''
+        //     }
+        // }
         
 
         stage('Test') {
@@ -55,9 +55,9 @@ pipeline {
         }
 
     }
-    // post {
-    //     always {
-    //         junit 'test-results/junit.xml'
-    //     }
-    // }
+    post {
+        always {
+            junit 'jest-results/junit.xml'
+        }
+    }
 }
